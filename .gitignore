@@ -1,0 +1,19 @@
+# Virtual environment
+.venv
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Generated/build outputs
+extract_all
+extract_all.py
+extract_papers.py
+Research_Paper.md
+
+# Data folders
+dataset
+paper_texts
+checkpoints
