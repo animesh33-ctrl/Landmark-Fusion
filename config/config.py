@@ -1,10 +1,3 @@
-"""
-config/config.py
-================
-Central configuration for the Indian Sign Language Recognition project.
-All paths, hyperparameters, and constants are defined here.
-"""
-
 import os
 import torch
 
@@ -29,12 +22,12 @@ PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CHECKPOINT_DIR = os.path.join(PROJECT_ROOT, "checkpoints")
 DATASET_DIR = os.path.join(PROJECT_ROOT, "dataset")
 
-IMG_SIZE = 128                # resize target (IMG_SIZE x IMG_SIZE)
+IMG_SIZE = 128                # (IMG_SIZE x IMG_SIZE)
 IMG_CHANNELS = 3              # RGB
 CNN_BATCH_SIZE = 64
 CNN_LEARNING_RATE = 1e-3
 CNN_EPOCHS = 60
-CNN_PATIENCE = 8              # early‑stopping patience
+CNN_PATIENCE = 8             
 CNN_NUM_WORKERS = 4
 CNN_LABEL_SMOOTHING = 0.1
 CNN_DROPOUT = 0.4
@@ -45,11 +38,9 @@ TRAIN_RATIO = 0.75
 VAL_RATIO = 0.15
 TEST_RATIO = 0.10
 
-# MediaPipe landmarks:  left_hand(21×3) + right_hand(21×3) = 126
 HAND_LANDMARKS = 21
-POSE_UPPER_LANDMARKS = 11      # upper‑body subset of 33 pose landmarks
-FEATURE_SIZE = (HAND_LANDMARKS * 3) * 2  # 126 – both hands only
-# Optionally include upper body pose:  126 + 11*3 = 159
+POSE_UPPER_LANDMARKS = 11      
+FEATURE_SIZE = (HAND_LANDMARKS * 3) * 2  
 FEATURE_SIZE_WITH_POSE = FEATURE_SIZE + POSE_UPPER_LANDMARKS * 3
 
 SEQUENCE_LENGTH = 30           # frames per sequence

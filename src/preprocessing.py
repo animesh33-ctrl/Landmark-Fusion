@@ -1,10 +1,3 @@
-"""
-src/preprocessing.py
-====================
-Image preprocessing and data‑augmentation transforms for the Indian
-Sign Language image dataset (CNN pipeline).
-"""
-
 import os
 import numpy as np
 from typing import Tuple, List
@@ -13,7 +6,6 @@ from torchvision import transforms
 from sklearn.model_selection import train_test_split
 from PIL import Image
 
-# ── project imports ──────────────────────────────────────────────────
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from config.config import (
@@ -21,21 +13,8 @@ from config.config import (
 )
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Transforms
-# ──────────────────────────────────────────────────────────────────────
-
 def get_train_transforms(img_size: int = IMG_SIZE) -> transforms.Compose:
-    """
-    Training transforms with data augmentation.
-
-    Augmentation includes:
-        - Random rotation (±15°)
-        - Random horizontal flip
-        - Random affine (shift + scale)
-        - Color jitter
-        - Random erasing
-    """
+    
     return transforms.Compose([
         transforms.Resize((img_size, img_size)),
         transforms.RandomRotation(15),
@@ -52,7 +31,6 @@ def get_train_transforms(img_size: int = IMG_SIZE) -> transforms.Compose:
 
 
 def get_val_transforms(img_size: int = IMG_SIZE) -> transforms.Compose:
-    """Validation / test transforms – deterministic, no augmentation."""
     return transforms.Compose([
         transforms.Resize((img_size, img_size)),
         transforms.ToTensor(),
@@ -60,17 +38,8 @@ def get_val_transforms(img_size: int = IMG_SIZE) -> transforms.Compose:
                              std=[0.229, 0.224, 0.225]),
     ])
 
-
-# ──────────────────────────────────────────────────────────────────────
-# Label encoding helpers
-# ──────────────────────────────────────────────────────────────────────
-
 def build_label_map(dataset_root: str) -> Tuple[dict, dict]:
-    """
-    Scan *dataset_root* and return two dicts:
-        label_to_idx : { class_folder_name : int }
-        idx_to_label : { int : class_folder_name }
-    """
+    
     classes = sorted([
         d for d in os.listdir(dataset_root)
         if os.path.isdir(os.path.join(dataset_root, d))
@@ -80,19 +49,12 @@ def build_label_map(dataset_root: str) -> Tuple[dict, dict]:
     return label_to_idx, idx_to_label
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Image + label collection
-# ──────────────────────────────────────────────────────────────────────
-
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".tiff", ".webp"}
 
 
 def collect_image_paths_and_labels(
         dataset_root: str) -> Tuple[List[str], List[int], dict, dict]:
-    """
-    Walk dataset_root (one subfolder per class) and return:
-        image_paths, labels, label_to_idx, idx_to_label
-    """
+    
     label_to_idx, idx_to_label = build_label_map(dataset_root)
     image_paths: List[str] = []
     labels: List[int] = []
@@ -110,24 +72,14 @@ def collect_image_paths_and_labels(
     return image_paths, labels, label_to_idx, idx_to_label
 
 
-# ──────────────────────────────────────────────────────────────────────
-# Train / Val / Test split
-# ──────────────────────────────────────────────────────────────────────
 
 def split_dataset(image_paths: List[str], labels: List[int],
                   train_ratio: float = TRAIN_RATIO,
                   val_ratio: float = VAL_RATIO,
                   test_ratio: float = TEST_RATIO,
                   seed: int = SEED):
-    """
-    Stratified split into train / val / test sets.
 
-    Returns
-    -------
-    (train_paths, train_labels,
-     val_paths,   val_labels,
-     test_paths,  test_labels)
-    """
+
     assert abs(train_ratio + val_ratio + test_ratio - 1.0) < 1e-6, \
         "Ratios must sum to 1.0"
 

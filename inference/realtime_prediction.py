@@ -168,10 +168,8 @@ def predict_sentence(model, keypoint_buffer: np.ndarray,
 
 
 def run_realtime(sentence_model_type: str = "transformer"):
-    """Open webcam and run real‑time sign language recognition."""
-
     print("=" * 65)
-    print("  REAL‑TIME SIGN LANGUAGE RECOGNITION")
+    print("  REAL-TIME SIGN LANGUAGE RECOGNITION")
     print("=" * 65)
     print("  Controls:  q = quit  |  m = toggle mode  |  c = clear")
 

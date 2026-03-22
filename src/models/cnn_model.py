@@ -26,17 +26,17 @@ class SignLanguageCNN(nn.Module):
         super().__init__()
 
         self.features = nn.Sequential(
-            # Block 1:  (3, 128, 128) → (32, 64, 64)
+            #  1:  (3, 128, 128) → (32, 64, 64)
             ConvBlock(in_channels, 32),
-            # Block 2:  (32, 64, 64)  → (64, 32, 32)
+            #  2:  (32, 64, 64)  → (64, 32, 32)
             ConvBlock(32, 64),
-            # Block 3:  (64, 32, 32)  → (128, 16, 16)
+            #  3:  (64, 32, 32)  → (128, 16, 16)
             ConvBlock(64, 128),
-            # Block 4:  (128, 16, 16) → (256, 8, 8)
+            #  4:  (128, 16, 16) → (256, 8, 8)
             ConvBlock(128, 256),
-            # Block 5:  (256, 8, 8)   → (512, 4, 4)
+            #  5:  (256, 8, 8)   → (512, 4, 4)
             ConvBlock(256, 512),
-            # Block 6:  (512, 4, 4)   → (512, 2, 2)
+            #  6:  (512, 4, 4)   → (512, 2, 2)
             ConvBlock(512, 512),
         )
 
@@ -60,7 +60,6 @@ class SignLanguageCNN(nn.Module):
             nn.Linear(256, num_classes),
         )
 
-        # Initialise weights
         self._init_weights()
 
     def _init_weights(self):
